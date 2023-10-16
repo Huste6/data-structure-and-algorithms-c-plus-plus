@@ -1,4 +1,3 @@
-
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -85,6 +84,47 @@ void addelement(node *&head, int x){
 	}
 	tmp->next = newnode;
 	newnode->prev = tmp;
+}
+
+void deletefirst(node*& head) {
+    if (head == nullptr) {
+        return;
+    }
+    node* tmp = head;
+    head = head->next;
+    if (head != nullptr) {
+        head->prev = nullptr;
+    }
+    delete(tmp);
+}
+
+void deletelast(node*& head) {
+    if (head == nullptr) {
+        return;
+    }
+    node* prev1 = nullptr;
+    node* tmp = head;
+    while (tmp->next != nullptr) {
+        prev1 = tmp;
+        tmp = tmp->next;
+    }
+    node* tmp1 = tmp;
+    tmp = prev1;
+    tmp->next = nullptr;
+    delete(tmp1);
+}
+
+void deleteat(node*& head, int k) {
+    node* tmp = head;
+    node* prev1 = nullptr;
+    for (int i = 0; i < k ; i++) {
+        prev1 = tmp;
+        tmp = tmp->next;
+    }
+    node* tmp1 = tmp;
+    prev1->next = tmp->next;
+    tmp->next->prev = prev1;
+    delete(tmp1);
 }
 
 int main(){

@@ -37,7 +37,7 @@ void addlast(node *&head, int k){
     node *tmp = head;
     if(head == NULL){
         head = newnode;
-        return ;    
+        return ;
     }
     if(timphantu(tmp, k)) return;
     while(tmp->next != NULL){
@@ -119,126 +119,19 @@ void reverse(node *&head){
     }
     head = prev;
 }
-//tim node thu k tu cuoi len
-node *findNode(node*head,int k){
-	node*slow=head;
-	node*fast=head;
-	for(int i=0;i<k;i++){
-		fast=fast->next;
-	}
-	while(fast!=nullptr){
-		fast=fast->next;
-		slow=slow->next;
-	}
-	return slow;
-}
-//hoan doi node theo cap 1->2->3->4 => 2->1->4->3
-node*hoandoinodetheocap1(node*& head) {
-    if (head == nullptr || head->next == nullptr) {
-        return head;
-    }
-    node*dummy=head->next;
-    node*tmp=nullptr;
-    while(head!=nullptr && head->next!=nullptr){
-		if(tmp!=nullptr){
-			tmp->next=head->next;
-		}
-		tmp=head;
-		node*newnode=head->next->next;
-		head->next->next=head;
-    	head->next=newnode;
-    	head=newnode;
-	}
-	return dummy;
-}
-//cach 2
-void hoandoinodetheocap1(node*&head){
-	if (head == nullptr || head->next == nullptr) {
-        return;
-    }
-    node*prev=nullptr;
-    node*tmp=head;
-    node*next=nullptr;
-    while(tmp!=nullptr && tmp->next!=nullptr){
-    	next=tmp->next;
-    	tmp->next=next->next;
-    	next->next=tmp;
-		prev=tmp;
-		tmp=tmp->next;
-	}
-}
-// tim mid cua node
-void printMid(node*&head){
-  	int length=length1(head);
-  	if(length%2!=0){
-    	node*slow=head;
-    	node*fast=head;
-    	while(fast!=NULL&&fast->next!=NULL){
-      		slow=slow->next;
-      		fast=fast->next->next;
-    	}
-    	cout<<slow->data;
-    	return;
-  	}else{
-    	node*slow=head;
-	    node*fast=head->next;
-	    while(fast!=NULL&&fast->next!=NULL){
-	      slow=slow->next;
-	      fast=fast->next->next;
-	    }
-	    cout<<slow->data<<" "<<slow->next->data;
-	    return;
-  	}
-}
-//dao nguoc daon con trong node
-void reverse(node*& head, int l, int r){
-  if(l == r) return;
-  node* tmp = head;
-  node* leftNode = head;
-  node* rightNode = head;
-  node* prevLeft = NULL;
-  node* nextRight = NULL;
-  int i = 1;
-  while(i < l){
-    prevLeft = leftNode;
-    leftNode = leftNode->next;
-    i++;
-  }
-  i = 1;
-  while(i < r){
-    rightNode = rightNode->next;
-    i++;
-  }
-  nextRight = rightNode->next;
-  node* current = leftNode;
-  node* prev = NULL;
-  node* next = NULL;
-  while(current != nextRight){
-    next = current->next;
-    current->next = prev;
-    prev = current;
-    current = next;
-  }
-  if(prevLeft != NULL){
-    prevLeft->next = rightNode;
-  }
-  else{
-    head = rightNode;
-  }
-  leftNode->next = nextRight;
-}
 int main(){
-    int n;
-    cin >> n;
-    int x;
-    cin >> x;
-    node *head = makenode(x);
-    node *tmp = head;
-    for(int i = 1; i < n; i++){
-        cin >> x;
-        tmp = addelement(tmp, x);
+    string s1;getline(cin,s1);
+    stringstream ss(s1);
+    vector<int> v;
+    int num;
+    while(ss>>num){
+        v.push_back(num);
     }
-    /*
+    node *head = makenode(v[0]);
+    node *tmp = head;
+    for(int i = 1; i < v.size(); i++){
+        tmp = addelement(tmp, v[i]);
+    }
     string s;
     int k, k1;
     while(cin >> s){
@@ -268,8 +161,7 @@ int main(){
         else if(s == "#"){
             break;
         }
-    }*/
-    head=hoandoinodetheocap1(head);
+    }
     duyet(head);
     return 0;
 }
