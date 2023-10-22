@@ -92,7 +92,52 @@ void printSpiral(TreeNode* root) {
         ltr = !ltr;
     }
 }
-
+//Level order traversal of Binary Tree in Spiral form Using Stack
+void printSpiral1(TreeNode*root)
+{
+    if(root==NULL) return;
+    stack<TreeNode*> s1;//for level to be print right to left
+    stack<TreeNode*> s2;//for level to be print left to right
+    s1.push(root);
+    while(!s1.empty() || !s2.empty())
+    {
+        while(!s1.empty()){
+            TreeNode*tmp=s1.top();
+            s1.pop();
+            cout<<tmp->data<<" ";
+            if(tmp->right) s2.push(tmp->right);
+            if(tmp->left) s2.push(tmp->left);
+        }
+        while(!s2.empty()){
+            TreeNode*tmp=s2.top();s2.pop();cout<<tmp->data<<" ";
+            if(tmp->left) s1.push(tmp->left);
+            if(tmp->right) s1.push(tmp->right);
+        }
+    }
+}
+//reverse level order traversal
+void reverseTraversal(TreeNode*root)
+{
+    int h=height(root);
+    for(int i=h;i>=1;i--){
+        printCurrentLevel(root,i);
+    }
+}
+//reverse level order traversal using stack and queue
+void reverseTraversal1(TreeNode*root)
+{
+    stack<TreeNode*> s;
+    queue<TreeNode*> q;
+    q.push(root);
+    while(!q.empty()){
+        TreeNode*tmp=q.front();q.pop();s.push(tmp);
+        if(tmp->right) q.push(tmp->right);
+        if(tmp->left) q.push(tmp->left);
+    }
+    while(!s.empty()){
+        TreeNode*tmp=s.top();s.pop();cout<<tmp->data<<" ";
+    }
+}
 int main(){
     TreeNode* root = newNode(1);
     root->left = newNode(2);
@@ -108,5 +153,14 @@ int main(){
 
     cout << "\nLevel order traversal in spiral form:\n";
     printSpiral(root);
+
+    cout << "\nLevel order traversal in spiral form using stack:\n";
+    printSpiral1(root);
+
+    cout << "\nReverse level Order traversal of binary tree using reverseTraversal:\n";
+    reverseTraversal(root);
+
+    cout << "\nReverse level Order traversal of binary tree using stack and queue:\n";
+    reverseTraversal1(root);
     return 0;
 }
