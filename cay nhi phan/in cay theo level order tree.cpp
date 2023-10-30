@@ -138,14 +138,22 @@ void reverseTraversal1(TreeNode*root)
         TreeNode*tmp=s.top();s.pop();cout<<tmp->data<<" ";
     }
 }
+void preorder(struct TreeNode* root) {
+    if(root == NULL) return;
+    cout<<root->data<<" ";
+    preorder(root->left);
+    preorder(root->right);
+}
+
 int main(){
     TreeNode* root = newNode(1);
     root->left = newNode(2);
     root->right = newNode(3);
     root->left->left = newNode(4);
     root->left->right = newNode(5);
+    cout<<"in theo preorder: \n";preorder(root);
 
-    cout << "Level Order traversal of binary tree using printLevelOrder:\n";
+    cout << "\nLevel Order traversal of binary tree using printLevelOrder:\n";
     printLevelOrder(root);
 
     cout << "\nLevel Order traversal of binary tree using printLevelOrder1:\n";
