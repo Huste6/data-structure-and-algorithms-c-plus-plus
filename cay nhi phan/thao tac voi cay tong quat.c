@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include<stdlib.h>
+#include<string.h>
 typedef struct Node{
     char name[256];
     struct Node* leftMostChild;
@@ -132,6 +134,22 @@ void freeTree(Node* r){
     printf("free node %s\n",r->name); free(r);
     r = NULL;
 }
+void insert(struct Node*parent,char*name)
+{
+    struct Node*newNode=(Node*)malloc(sizeof(Node));
+    strcpy(parent->name,name);
+    newNode->leftMostChild=NULL;
+    newNode->rightSibling=NULL;
+    if(parent==NULL){
+        parent->leftMostChild=newNode;
+    }else{
+        struct Node*sibling=parent->leftMostChild;
+        while(sibling->rightSibling!=NULL){
+            sibling=sibling->rightSibling;
+        }
+        sibling->rightSibling=newNode;
+    }
+}
 
 void loadTree(char* filename) {
     FILE* f = fopen(filename, "r");
@@ -140,17 +158,22 @@ void loadTree(char* filename) {
         return;
     }
     root = NULL;
-    char line[256];
+    char line[256];int i=0;
     while (fgets(line, sizeof(line), f)) {
-        if (strcmp(line, "$$\n") == 0) break;
+        if (strcmp(line, "$$") == 0) break;
         line[strcspn(line, "\n")] = '\0';
         char* token = strtok(line, " ");
-        char* name = token;
-        token = strtok(NULL, " ");
-        while (token != NULL && strcmp(token, "$") != 0) {
-            addChild(root, name, token);
-            token = strtok(NULL, " ");
+        Node*tmp=find(root,token);
+        if(tmp==NULL && i==0){
+            root=makeNode(token);
+
         }
+        while(token!=NULL){
+            token=strtok(NULL," ");
+            if(strcmp(token,"$")) break;
+            insert(tmp,token);
+        }
+        i++;
     }
 
     fclose(f);

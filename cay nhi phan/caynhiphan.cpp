@@ -281,6 +281,65 @@ int maxDepth1(node* root) {
     }
     return ans;
 }
+//Tổng giá trị trên một khoảng của cây nhị phân tìm kiếm
+int sumNodeinRange(node*root,int low,int height)
+{
+    int ans=0;
+    if(root==NULL) return 0;
+    if(root->data>=low && root->data<=height) ans=ans+root->data;
+    if(root->data >= low) ans=ans+sumNodeinRange(root->left,low,height);
+    if(root->data < height) ans=ans+sumNodeinRange(root->right,low,height);
+    return ans;
+}
+//Tổng giá trị trên một khoảng của cây nhị phân tìm kiếm dung stack
+int sumNodeinRange1(node*root,int low,int height)
+{
+    int ans=0;
+    stack<node*> stack;stack.push(root);
+    while(!stack.empty()){
+        node*newnode=stack.top();stack.pop();
+        if(low<= newnode->data && newnode->data <= height) ans+=newnode->data;
+        if(newnode->left != nullptr && low<=newnode->data) stack.push(newnode->left);
+        if(newnode->right != nullptr && newnode->data <height) stack.push(newnode->right);
+    }
+    return ans;
+}
+//Chênh lệch nhỏ nhất giữa 2 nút trong cây nhị phân tìm kiếm
+vector<int> dfs(node*head)
+{
+    //if(node==nullptr) return NULL;
+    vector<int> left=dfs(head->left);
+    vector<int> right=dfs(head->right);
+    left.push_back(head->data);
+    left.insert(left.end(),right.begin(),right.end());
+    return left;
+}
+int getMinimumDiffenece(node*head)
+{
+    vector<int> val=dfs(head);
+    int ans=INT_MAX;
+    for(int i=1;i<val.size();i++){
+        ans=min(ans,val[i]-val[i-1]);
+    }
+    return ans;
+}
+//kiem tra cay nhi phan co phai la cay nhi phan tim kiem khong
+vector<int> val1;
+void push_val(node*root)
+{
+    if(root==nullptr) return;
+    push_val(root->left);
+    val1.push_back(root->data);
+    push_val(root->right);
+}
+bool BSTCheck(node*root)
+{
+    push_val(root);
+    for(int i=1;i<val1.size();i++){
+        if(val1[i]-val1[i-1]<0) return false;
+    }
+    return true;
+}
 int main() {
     node* head = NULL;
     while (1) {
@@ -296,6 +355,9 @@ int main() {
         cout << "9.phan tu nho nhat cua cay\n";
         cout << "10.xoa phan tu\n";
         cout << "11.do sau lon nhat cua cay\n";
+        cout << "12.tong cua cac node trong khoang [low,height]\n";
+        cout << "13.chenh lech nho nhat giua 2 nut bat ki\n";
+        cout<<"14.kiem tra cay nhi phan co phai la cay nhi phan tim kiem kh\n";
         cout << "0.thoat\n";
         cout << "---------------------" << endl;
         cout << "nhap lua chon: ";
@@ -353,6 +415,14 @@ int main() {
 			XoaNode(head,val);
 		}else if(lc==11){
 			cout<<maxDepth1(head)<<endl;
+		}else if(lc==12){
+            int low,height;cin>>low>>height;
+            cout<<sumNodeinRange(head,low,height)<<endl;
+		}else if(lc==13){
+            cout<<"Chênh lệch nhỏ nhất giữa 2 nút trong cây nhị phân tìm kiếm la: "<<getMinimumDiffenece(head)<<endl;
+		}else if(lc==14){
+            if(BSTCheck(head)) cout<<"cay nay la cay nhi phan tim kiem\n";
+            else cout<<"cay nay khong la cay nhi phan tim kiem\n";
 		}
         else {
             break;
