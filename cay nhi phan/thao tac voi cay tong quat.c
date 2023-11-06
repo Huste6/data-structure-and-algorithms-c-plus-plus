@@ -179,8 +179,67 @@ void loadTree(char* filename) {
     }
     fclose(f);
 }
-
-
+//dem so nut la trong cay
+int cnt_la(Node*r)
+{
+    if(r==NULL) return 0;
+    int s=0;
+    Node*p=r->leftMostChild;
+    if(p==NULL) s=1;
+    while(p!=NULL){
+        s+=cnt_la(p);
+        p=p->rightSibling;
+    }
+    return s;
+}
+//them nut con trai nhat cua 1 nut
+void push_left_most(char*name,char*child)
+{
+    Node*tmp=find(root,name);
+    if(tmp==NULL) return;
+    else{
+        Node*newNode=makeNode(child);
+        newNode->rightSibling=tmp->leftMostChild;
+        tmp->leftMostChild=newNode;
+    }
+}
+//dem so nut con cua 1 nut cha
+int cnt_con(char*name)
+{
+    Node*tmp=find(root,name);
+    if(tmp==NULL) return 0;
+    Node*tmp1=tmp->leftMostChild;int cnt=0;
+    while(tmp1!=NULL){
+        cnt++;
+        tmp1=tmp1->rightSibling;
+    }
+    return cnt;
+}
+//them nut con vao vi tri k cac danh sach con cua 1 nut cha
+void push_at(char*name,char*child,int k)
+{
+    if(k==0){
+        push_left_most(name,child);return;
+    }
+    Node*tmp=find(root,name);
+    if(tmp==NULL) return;
+    if(k>cnt_con(tmp)-1) return;
+    if(k==cnt_con(tmp)){
+        addChild(name,child);return;
+    }
+    int i=0;
+    Node*p=tmp->leftMostChild;Node*prev=NULL;
+    while(p!=NULL){
+        prev=p;
+        p=p->rightSibling;
+        i++;
+        if(i==k){
+            Node*newNode=makeNode(child);
+            prev->rightSibling=newNode;newNode->rightSibling=p;
+            tmp->rightSibling=newNode;return;
+        }
+    }
+}
 void main(){
     while(1){
         char cmd[256];
@@ -204,6 +263,26 @@ void main(){
             printf("Name of Child node: ");
             scanf("%s",child);
             addChild(name, child);
+        }
+        else if(strcmp(cmd,"Node_la")==0){
+            printf("so nut la cua cay: %d\n",cnt_la(root));
+        }
+        else if(strcmp(cmd,"push_left_most")==0){
+            char name[256], child[256];
+            printf("Node u want to add: ");
+            scanf("%s", name);
+            printf("Name of Child node: ");
+            scanf("%s",child);
+            push_left_most(name,child);
+        }else if(strcmp(cmd,"Node_con")==0)
+        {
+            char name[256];scanf("%s",name);
+            printf("So nut con cua nut %s: %d\n",name,cnt_con(name));
+        }
+        else if(strcmp(cmd,"Add_at"))
+        {
+            char name[256],child[256];int k;scanf("%s%s%d",name,child,&k);
+            push_at(name,child,k);
         }
         else if(strcmp(cmd,"Store")==0) processStore();
     }
