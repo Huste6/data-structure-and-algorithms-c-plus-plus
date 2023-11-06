@@ -24,6 +24,7 @@ Node* find(Node* r, char* name){
         p = p->rightSibling;
     }
 }
+
 Node* addLast(Node* p, char*name){
     if(p == NULL) return makeNode(name);
     p->rightSibling = addLast(p->rightSibling, name);
@@ -34,6 +35,7 @@ void addChild(char*name, char* child){
     if(r == NULL) return;
     r->leftMostChild = addLast(r->leftMostChild,child);
 }
+
 bool check_la(Node*r)
 {
     Node*p=r->leftMostChild;
@@ -75,12 +77,14 @@ void printTreeF(Node* r, FILE* f){
     }
 }
 void processFind(){
+    printf("Find a node in tree: ");
     char name[256]; scanf("%s",name);
     Node* p = find(root,name);
     if(p == NULL) printf("Not Found %s\n",name);
     else printf("Found %s\n",name);
 }
 void processFindChildren(){
+    printf("Find children node of: ");
     char name[256]; scanf("%s",name);
     Node* p = find(root,name);
     if(p == NULL) printf("Not Found %s\n",name);
@@ -93,6 +97,7 @@ void processFindChildren(){
     }
     printf("\n");
 }
+
 int height(Node* p){
     if(p == NULL) return 0;
     int maxH = 0;
@@ -104,8 +109,10 @@ int height(Node* p){
     }
     return maxH + 1;
 }
+
 void processHeight(){
     char name[256];
+    printf("Choose a node: ");
     scanf("%s",name);
     Node* p = find(root,name);
     if(p == NULL) printf("Not Found %s\n",name);
@@ -127,6 +134,7 @@ void processCount(){
     printf("Number of members is %d\n",count(root));
 }
 void processStore(){
+    printf("filename u want to store: ");
     char filename[256];
     scanf("%s",filename);
     FILE* f = fopen(filename,"w");
@@ -179,6 +187,7 @@ void main(){
         printf("Enter command: "); scanf("%s",cmd);
         if(strcmp(cmd,"Quit") == 0) break;
         else if(strcmp(cmd,"Load")==0){
+            printf("Filename: ");
             char filename[256];
             scanf("%s",filename);
             loadTree(filename);
@@ -190,7 +199,10 @@ void main(){
         else if(strcmp(cmd,"Count")==0) processCount();
         else if (strcmp(cmd, "AddChild") == 0) {
             char name[256], child[256];
-            scanf("%s%s", name, child);
+            printf("Node u want to add: ");
+            scanf("%s", name);
+            printf("Name of Child node: ");
+            scanf("%s",child);
             addChild(name, child);
         }
         else if(strcmp(cmd,"Store")==0) processStore();
