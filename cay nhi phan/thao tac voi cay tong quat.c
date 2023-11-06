@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include<stdbool.h>
 typedef struct Node{
     char name[256];
     struct Node* leftMostChild;
@@ -25,42 +26,52 @@ Node* find(Node* r, char* name){
 }
 Node* addLast(Node* p, char*name){
     if(p == NULL) return makeNode(name);
-        p->rightSibling = addLast(p->rightSibling, name);
-        return p;
+    p->rightSibling = addLast(p->rightSibling, name);
+    return p;
 }
-void addChild(Node*root,char*name, char* child){
+void addChild(char*name, char* child){
     Node* r = find(root,name);
     if(r == NULL) return;
     r->leftMostChild = addLast(r->leftMostChild,child);
 }
+bool check_la(Node*r)
+{
+    Node*p=r->leftMostChild;
+    if(p==NULL) return true;
+    return false;
+}
 void printTree(Node* r){
     if(r == NULL) return;
-    printf("%s: ",r->name);
-    Node* p = r->leftMostChild;
-    while(p != NULL){
-        printf("%s ",p->name);
-        p = p->rightSibling;
-    }
-    printf("\n");
-    p = r->leftMostChild;
-    while(p != NULL){
-        printTree(p);
-        p = p->rightSibling;
+    if(check_la(r)==false){
+        printf("%s: ",r->name);
+        Node* p = r->leftMostChild;
+        while(p != NULL){
+            printf("%s ",p->name);
+            p = p->rightSibling;
+        }
+        printf("\n");
+        p = r->leftMostChild;
+        while(p != NULL){
+            printTree(p);
+            p = p->rightSibling;
+        }
     }
 }
 void printTreeF(Node* r, FILE* f){
     if(r == NULL) return;
-    fprintf(f,"%s ",r->name);
-    Node* p = r->leftMostChild;
-    while(p != NULL){
-        fprintf(f,"%s ",p->name);
-        p = p->rightSibling;
-    }
-    fprintf(f," $\n");
-    p = r->leftMostChild;
-    while(p != NULL){
-        printTreeF(p,f);
-        p = p->rightSibling;
+    if(check_la(r)==false){
+        fprintf(f,"%s ",r->name);
+        Node* p = r->leftMostChild;
+        while(p != NULL){
+            fprintf(f,"%s ",p->name);
+            p = p->rightSibling;
+        }
+        fprintf(f," $\n");
+        p = r->leftMostChild;
+        while(p != NULL){
+            printTreeF(p,f);
+            p = p->rightSibling;
+        }
     }
 }
 void processFind(){
@@ -134,22 +145,6 @@ void freeTree(Node* r){
     printf("free node %s\n",r->name); free(r);
     r = NULL;
 }
-void insert(struct Node*parent,char*name)
-{
-    struct Node*newNode=(Node*)malloc(sizeof(Node));
-    strcpy(parent->name,name);
-    newNode->leftMostChild=NULL;
-    newNode->rightSibling=NULL;
-    if(parent==NULL){
-        parent->leftMostChild=newNode;
-    }else{
-        struct Node*sibling=parent->leftMostChild;
-        while(sibling->rightSibling!=NULL){
-            sibling=sibling->rightSibling;
-        }
-        sibling->rightSibling=newNode;
-    }
-}
 
 void loadTree(char* filename) {
     FILE* f = fopen(filename, "r");
@@ -158,26 +153,25 @@ void loadTree(char* filename) {
         return;
     }
     root = NULL;
-    char line[256];int i=0;
+    char line[256];
     while (fgets(line, sizeof(line), f)) {
-        if (strcmp(line, "$$") == 0) break;
         line[strcspn(line, "\n")] = '\0';
+        if (strcmp(line, "$$") == 0) break;
         char* token = strtok(line, " ");
-        Node*tmp=find(root,token);
-        if(tmp==NULL && i==0){
-            root=makeNode(token);
-
+        char name[256];
+        strcpy(name, token);
+        if (root == NULL) {
+            root = makeNode(name);
         }
-        while(token!=NULL){
-            token=strtok(NULL," ");
-            if(strcmp(token,"$")) break;
-            insert(tmp,token);
+        while (token != NULL) {
+            token = strtok(NULL, " ");
+            if (token == NULL || strcmp(token, "$") == 0) break;
+            addChild(name, token);
         }
-        i++;
     }
-
     fclose(f);
 }
+
 
 void main(){
     while(1){
@@ -197,7 +191,7 @@ void main(){
         else if (strcmp(cmd, "AddChild") == 0) {
             char name[256], child[256];
             scanf("%s%s", name, child);
-            addChild(root,name, child);
+            addChild(name, child);
         }
         else if(strcmp(cmd,"Store")==0) processStore();
     }
