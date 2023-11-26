@@ -165,7 +165,21 @@ treenode* parent(treenode* p, treenode* r) {
 
     return NULL;
 }
-
+//kiem tra 2 cay co giong nhau hay khong
+bool isSameTree(TreeNode* p, TreeNode* q) {
+    if (p == nullptr && q == nullptr) {
+        return true;
+    }
+    if (p == nullptr || q == nullptr) {
+        return false;
+    }
+    if (p->val != q->val) {
+        return false;
+    }
+    bool leftSame = isSameTree(p->left, q->left);
+    bool rightSame = isSameTree(p->right, q->right);
+    return leftSame && rightSame;
+}
 int main() {
     treenode* root = newnode(1);
     root->left = newnode(2);

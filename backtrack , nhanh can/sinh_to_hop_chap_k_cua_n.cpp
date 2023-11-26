@@ -2,6 +2,7 @@
 using namespace std;
 #define MAX 100l
 int x[MAX],n,k;
+
 void print(){
 	for(int i=1;i<=k;i++){
 		cout<<x[i];

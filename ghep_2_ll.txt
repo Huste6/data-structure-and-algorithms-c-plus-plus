@@ -1,0 +1,34 @@
+//dSort giam
+//iSort tang
+
+Input:
+5
+5 4 3 2 1
+4
+8 5 3 1
+dSort
+Output: 8 5 5 4 3 3 2 1 1
+
+Input:
+5
+1 2 3 4 5
+4
+1 3 5 8
+iSort
+Ouput: 1 1 2 3 3 4 5 5 8
+
+Input: 
+5
+10 8 6 4 2
+6
+1 9 10 16 20 23
+dSort
+Output: 23 20 16 10 10 9 8 6 4 2 1
+
+Input:
+6
+1 9 10 13 25 83
+6
+10 9 8 4 3 1
+iSort
+Output: 1 1 3 4 8 9 9 10 10 13 25 83 

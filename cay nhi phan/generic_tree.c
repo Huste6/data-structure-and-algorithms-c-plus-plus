@@ -73,6 +73,22 @@ void inOrder(Node *root) {
         p=p->nextSibling;
     }
 }
+//tong cac nut o level k voi nut goc la level 1
+void cal(int k,Node*root,int d)
+{
+    if(root=NULL) return 0;
+    if(k==d) return root->data;
+    return cal(k,root->left,d+1)+cal(k,root->right,d+1);
+}
+//tra ve do sau lon nhat cua nut k co do sau la d
+int cal1(int k,Node*root,int d)
+{
+	if(root==NULL) return 0;
+	if(root->data==k) return d;
+	int d1=cal1(k,root->left,d+1);
+	if(d1>0) return d1;
+	return cal1(k,root->right,d+1);
+}
 
 int main() {
     Node *root = NULL;

@@ -25,7 +25,7 @@ void printCurrentLevel(TreeNode* node, int level){
     if(level == 1){
         cout << node->data << " ";
     }
-    else if(leve``l > 1){
+    else if(level > 1){
         printCurrentLevel(node->left, level - 1);
         printCurrentLevel(node->right, level - 1);
     }

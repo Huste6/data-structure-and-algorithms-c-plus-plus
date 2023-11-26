@@ -54,12 +54,12 @@ void deleteat(node **head, int k){
     int n=size(*head);
     if(1<k||k>n-1) return;
     else{
-		for(int i = 0; i < k-1; i++){
-	        tmp = tmp->next;
-	    }
-	    node *toBeDeleted = tmp->next;
-	    tmp->next = tmp->next->next;
-	    delete toBeDeleted;}
+	for(int i = 0; i < k-1; i++){
+	    tmp = tmp->next;
+	}
+        node *toBeDeleted = tmp->next;
+        tmp->next = tmp->next->next;
+        delete toBeDeleted;}
 }
 
 int main(){

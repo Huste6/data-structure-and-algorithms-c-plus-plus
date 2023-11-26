@@ -37,7 +37,7 @@ void addlast(node *&head, int k){
     node *tmp = head;
     if(head == NULL){
         head = newnode;
-        return ;    
+        return ;
     }
     if(timphantu(tmp, k)) return;
     while(tmp->next != NULL){
@@ -227,6 +227,170 @@ void reverse(node*& head, int l, int r){
   }
   leftNode->next = nextRight;
 }
+//xoa cac phan tu trung nhau
+//vd: 1->1->1->2->2->3 => 1->2->3
+ListNode* deleteDuplicates(ListNode* head) {
+        ListNode* tmp = head;
+        ListNode* prev = nullptr;
+
+        while (tmp != nullptr) {
+            prev = tmp;
+            tmp = tmp->next;
+
+            while (tmp != nullptr && prev->val == tmp->val) {
+                tmp = tmp->next;
+            }
+
+            if (tmp != nullptr && tmp->val != prev->val) {
+                prev->next = tmp;
+                prev = tmp;
+            } else if (tmp == nullptr) {
+                prev->next = nullptr;
+            }
+        }
+
+        return head;
+    }
+//xoa cac phan tu trung nhau 2
+//vd : 1->1->1->2->3->3->4->4->5
+//output: 2->5
+ListNode* deleteDuplicates(ListNode* head) {
+        ListNode*tmp=head;
+        ListNode*prev=NULL;
+        ListNode*prev_prev=prev;
+        while(tmp!=NULL){
+            prev_prev=prev;
+            prev=tmp;
+            tmp=tmp->next;
+            if(tmp!=NULL && tmp->val==prev->val){
+                while(tmp != nullptr && (tmp->val == prev->val || (tmp->next != nullptr && tmp->next->val == tmp->val))){
+                    prev=tmp;
+                    tmp=tmp->next;
+                }
+                if(prev_prev==NULL){
+                    head=tmp;
+                }else{
+                    prev_prev->next=tmp;
+                }
+            }
+
+        }
+        return head;
+    }
+//di chuyen sang phai k don vi
+ListNode* rotateRight(ListNode* head, int k) {
+        if (!head || k == 0) {
+            return head;
+        }
+
+        int length = 1; // Start from 1 to account for the original head
+        ListNode* tmp = head;
+        while (tmp->next) {
+            length++;
+            tmp = tmp->next;
+        }
+
+        // Convert singly linked list into circular linked list
+        tmp->next = head;
+
+        k = k % length;
+        if (k == 0) {
+            tmp->next = nullptr; // No rotation needed
+            return head;
+        }
+
+        k = length - k; // Find the new head position
+
+        while (k--) {
+            tmp = tmp->next;
+        }
+
+        head = tmp->next;
+        tmp->next = nullptr; // Set the new tail's next to null
+
+        return head;
+    }
+//dao theo cap
+ListNode* swapPairs(ListNode* head) {
+        if(head==NULL|| head->next==NULL) return head;
+        ListNode*dummyNode=new ListNode();
+        ListNode*prevNode=dummyNode;
+        ListNode*currNode=head;
+        while(currNode!=NULL && currNode->next!=NULL){
+            prevNode->next=currNode->next;
+            currNode->next=prevNode->next->next;
+            prevNode->next->next=currNode;
+            prevNode=currNode;
+            currNode=currNode->next;
+        }
+        return dummyNode->next;
+    }
+//xoa 1 phan tu vi tri k tu cuoi len
+int countNodes(ListNode* head) {
+        int count = 0;
+        ListNode* current = head;
+        while (current != nullptr) {
+            count++;
+            current = current->next;
+        }
+        return count;
+    }
+
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        int totalNodes = countNodes(head);
+        int targetIndex = totalNodes - n;
+
+        if (targetIndex == 0) {
+            ListNode* newHead = head->next;
+            delete head;
+            return newHead;
+        }
+        ListNode* current = head;
+        ListNode* prev = nullptr;
+        int currentIndex = 0;
+
+        while (currentIndex < targetIndex) {
+            prev = current;
+            current = current->next;
+            currentIndex++;
+        }
+
+        prev->next = current->next;
+        delete current;
+
+        return head;
+    }
+//add two ll
+ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode* result = new ListNode(0);
+        ListNode* ptr = result;
+        int carry = 0;
+
+        while(l1 != nullptr || l2 != nullptr) {
+            int sum = carry;
+
+            if(l1 != nullptr) {
+                sum += l1->val;
+                l1 = l1->next;
+            }
+
+            if(l2 != nullptr) {
+                sum += l2->val;
+                l2 = l2->next;
+            }
+
+            carry = sum / 10;
+            sum = sum % 10;
+            ptr->next = new ListNode(sum);
+            ptr = ptr->next;
+        }
+
+        if(carry == 1) {
+            ptr->next = new ListNode(1);
+        }
+
+        return result->next;
+    }
 int main(){
     int n;
     cin >> n;

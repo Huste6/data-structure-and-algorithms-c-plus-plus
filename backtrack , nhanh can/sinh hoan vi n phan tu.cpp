@@ -14,6 +14,7 @@ void try1(int i){
 		if(!used[j]){
 			x[i]=j;
 			used[j]=true;
+
 			if(i==n) print();
 			else try1(i+1);
 			used[j]=false;

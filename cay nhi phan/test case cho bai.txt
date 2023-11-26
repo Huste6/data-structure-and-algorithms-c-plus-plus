@@ -1,0 +1,19 @@
+makeroot 3
+insert 4 3
+insert 5 3
+insert 6 3
+insert 7 3
+insert 8 4
+insert 9 4
+insert 10 5
+insert 11 5
+insert 12 5
+insert 13 6
+insert 14 7
+print
+node_lon_hon 10
+3: 4 5 6 7
+4: 8 9
+5: 10 11 12
+6: 13
+7: 14
