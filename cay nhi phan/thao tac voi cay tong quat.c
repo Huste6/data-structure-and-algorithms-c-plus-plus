@@ -240,6 +240,7 @@ void push_at(char*name,char*child,int k)
         }
     }
 }
+<<<<<<< HEAD
 //tim cha cua node r1
 Node* parent(Node* p, Node* r) {
     if(r == NULL)
@@ -257,6 +258,8 @@ Node* parent(Node* p, Node* r) {
 
     return NULL;
 }
+=======
+>>>>>>> 72e0d8437d7ab09c87bd01b7f5e571044ee16659
 void main(){
     while(1){
         char cmd[256];
@@ -300,6 +303,7 @@ void main(){
         {
             char name[256],child[256];int k;scanf("%s%s%d",name,child,&k);
             push_at(name,child,k);
+<<<<<<< HEAD
         }
         else if(strcmp(cmd,"Find_parent"))
         {
@@ -310,6 +314,8 @@ void main(){
             }else{
                 printf("Nut cha cua %s la: %s",name,parent(tmp,root));
             }
+=======
+>>>>>>> 72e0d8437d7ab09c87bd01b7f5e571044ee16659
         }
         else if(strcmp(cmd,"Store")==0) processStore();
     }
