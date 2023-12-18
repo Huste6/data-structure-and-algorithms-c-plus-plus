@@ -10,6 +10,11 @@ insert 11 5
 insert 12 5
 insert 13 6
 insert 14 7
+insert 15 11
+insert 16 11
+insert 17 15
+insert 18 15
+insert 19 15
 print
 node_lon_hon 10
 3: 4 5 6 7

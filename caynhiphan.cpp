@@ -93,7 +93,7 @@ void node_co_2_con(node* head) {
         {
             cout << head->data << " ";
         }
-        
+
         node_co_2_con(head->left);
         node_co_2_con(head->right);
     }
@@ -202,7 +202,7 @@ void XoaNode(node *&head,int val){
 				//dam nhan tim ra node trai nhat
 				DiTimNodeTheMang(tmp,tmp1);
 				// c2: tim node phai nhat cua cay con trai(cay con trai cua node can xoa)
-				
+
 			}
 			delete(tmp);
 		}
@@ -216,18 +216,18 @@ void XoaNode(node *&head,int val){
 void printtree(node* head) {
     if (head != NULL) {
         printtree(head->left);
-        cout << head->data << " ";
         printtree(head->right);
+        cout << head->data << " ";
     }
 }
 //ham tra ve level cua cay
 int treeLevel(node *t){
     if(t == nullptr)
         return -1;
-    
+
     int leftHeight = treeLevel(t->left);
     int rightHeight = treeLevel(t->right);
-    
+
     return max(leftHeight, rightHeight) + 1;
 }
 //kiem tra cay do co phai la cay avl hay kong

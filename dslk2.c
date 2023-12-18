@@ -62,7 +62,26 @@ void removeAllNode(Node** head, int v) {
         tmp = tmp->next;
     }
 }
-
+Node *xoanutam(Node*head)
+{
+    if(head==NULL) return NULL;
+    while(head!=NULL && head->val<0){
+        Node*tmp=head;
+        head=head->next;
+        free(tmp);
+    }
+    Node*curr=head;
+    while(curr!=NULL && curr->next!=NULL){
+        if(curr->next->val<0){
+            Node*tmp=curr->next;
+            curr->next=curr->next->next;
+            free(tmp);
+        }else{
+            curr=curr->next;
+        }
+    }
+    return head;
+}
 int count(Node* head) {
     int cnt = 0;
     while (head != NULL) {
@@ -107,6 +126,7 @@ int main() {
         printf("4. Dem so node: \n");
         printf("5. Reverse mang: \n");
         printf("6. In ra mang: \n");
+        printf("7. Xoa cac nut am:\n");
         printf("-----------------------\n");
         printf("Lua chon cua ban la: ");
         scanf("%d", &choice);
@@ -136,7 +156,10 @@ int main() {
             reverse(&head);
         } else if (choice == 6) {
             print(head);
-        } else {
+        } else if(choice==7){
+            head=xoanutam(head);
+        }
+        else {
             break;
         }
     }

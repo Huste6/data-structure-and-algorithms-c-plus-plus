@@ -73,7 +73,7 @@ void inOrder(Node *root) {
         p=p->nextSibling;
     }
 }
-//tong cac nut o level k voi nut goc la level 1
+/*tong cac nut o level k voi nut goc la level 1
 void cal(int k,Node*root,int d)
 {
     if(root=NULL) return 0;
@@ -88,17 +88,17 @@ int cal1(int k,Node*root,int d)
 	int d1=cal1(k,root->left,d+1);
 	if(d1>0) return d1;
 	return cal1(k,root->right,d+1);
-}
+}*/
 
 int main() {
     Node *root = NULL;
     char s[100];
     int u, v;
     while (scanf("%s", s) == 1) {
-        if (strcmp(s, "MakeRoot") == 0) {
+        if (strcmp(s, "makeroot") == 0) {
             scanf("%d", &v);
             root = makeNode(v);
-        } else if (strcmp(s, "Insert") == 0) {
+        } else if (strcmp(s, "insert") == 0) {
             scanf("%d%d", &u, &v);
             Node *tmp = findNode(root, v);
             if (tmp != NULL) {
