@@ -146,7 +146,6 @@ void xulyfile(char* filename) {
     while (tmp != NULL) {
         root = insert(root, tmp);
         printf("Nut moi thu %d co dia chi %p\n", i, (void*)tmp);
-        //printf("%s %d\n",tmp->data.name_doi_bong,tmp->data.diem);
         tmp = tmp->next;
         i++;
     }

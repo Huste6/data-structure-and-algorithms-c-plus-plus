@@ -173,7 +173,6 @@ void Xoasinhvien(TreeNode* root) {
         return;
     }
 
-    // Case 3: Node has two children
     TreeNode* successor = tmp->right;
     while (successor->left != NULL) {
         successor = successor->left;
@@ -192,7 +191,6 @@ void Xoasinhvien(TreeNode* root) {
     free(successor);
 }
 
-// Function to find the parent of a node based on username
 TreeNode* findParent(TreeNode* root, TreeNode* node) {
     if (root == NULL || root == node) return NULL;
     if ((root->left == node) || (root->right == node)) return root;
@@ -203,7 +201,6 @@ TreeNode* findParent(TreeNode* root, TreeNode* node) {
     }
 }
 
-// Function to destroy the entire tree and release memory
 void destroyTree(TreeNode* root) {
     if (root != NULL) {
         destroyTree(root->left);
@@ -212,7 +209,6 @@ void destroyTree(TreeNode* root) {
     }
 }
 
-// Main function
 int main() {
     xu_ly_file("sinhvien.txt.txt");
     while (1) {
