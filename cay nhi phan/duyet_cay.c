@@ -52,7 +52,14 @@ int maxDepth(struct node* root) {
     int right = maxDepth(root->right);
     return (left > right) ? left + 1 : right + 1;
 }
-
+struct node*find(struct node* root,int val)
+{
+    if(root==NULL) return NULL;
+    if(root->data==val) return val;
+    struct node*tmp=find(root->left,val);
+    if(tmp!=NULL) return tmp;
+    return find(root->right,val);
+}
 int main() {
     struct node* root = create(34);
     add_left_node(root, 32);
@@ -69,6 +76,8 @@ int main() {
     postorder(root);
 
     printf("\nDo sau lon nhat tu root den la: %d\n", maxDepth(root));
-
+    struct node*tmp=find(root,42);
+    if(tmp!=NULL) printf("Found\n");
+    else printf("Not Found\n");
     return 0;
 }

@@ -23,7 +23,7 @@ void LoadFile(char *filename) {
     int k = 0;
 
     while (fgets(tmp, sizeof(tmp), f)) {
-        tmp[strcspn(tmp, "\n")] = '\0';
+        tmp[strcspn(tmp, "\n")] = '\0'; // Remove newline character
         if (strcmp(tmp, "#") == 0)
             break;
 
@@ -160,23 +160,6 @@ void insert(char *name, char *email, int *n) {
     strcpy(a[i].email, email);
     (*n)++;
 }
-void insert1(char* name, char* email){
-	// maintain increasing order of name
-	int i = n-1;
-	while(i >= 0){
-		int c = strcmp(students[i].name,name);
-		if(c == 0){
-			printf("Name %s exists, do not insert\n",name); return;
-		}else if(c > 0){
-			students[i+1] = students[i]; i--;
-		}else break;
-	}
-	i++;
-	strcpy(students[i].name,name);
-	strcpy(students[i].email,email);
-	n++;
-}
-
 void remove1(int index)
 {
     for(int i=0;i<index;i++){

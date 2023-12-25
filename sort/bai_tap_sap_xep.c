@@ -52,7 +52,7 @@ void xu_ly_file2(char *filename, int n) {
     }
 
     for (int i = 0; i < n; i++) {
-        fscanf(f, "%s %s %s\n%s", a[i].Ho, a[i].dem, a[i].ten, a[i].ngaysinh);
+        fscanf(f, "%s %s %s\n%s\n", a[i].Ho, a[i].dem, a[i].ten, a[i].ngaysinh);
     }
 
     fclose(f);

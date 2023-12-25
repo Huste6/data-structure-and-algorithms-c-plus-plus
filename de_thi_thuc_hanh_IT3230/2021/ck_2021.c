@@ -303,7 +303,7 @@ int main() {
             xuatfile(f, root);
             fclose(f);
         } else if (cmd == 5) {
-            //luu_vao_cay(&root, &head);
+            //luu_vao_cay(root, &head);
             inorder(root);
         }
     }

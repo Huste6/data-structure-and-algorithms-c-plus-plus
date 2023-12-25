@@ -105,10 +105,10 @@ void xu_ly_file(char* filename) {
         char name[Max_Len], pass[Max_Len];
         double diem;
         fscanf(f, "%s %s %lf\n", name, pass, &diem);
-        TreeNode* parent = NULL;
+        //TreeNode* parent = NULL;
         if (root == NULL) {
             root = makeNode(name, pass, diem);
-            parent = root;
+            //parent = root;
         } else {
             TreeNode* newnode = makeNode(name, pass, diem);
             root = insert(root, newnode);

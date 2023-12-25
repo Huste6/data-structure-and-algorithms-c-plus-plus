@@ -88,7 +88,35 @@ void Load(char *filename)
     }
     fclose(f);
 }
-
+void Load1(char *filename)
+{
+    FILE*f=fopen(filename,"r");
+    int i=0;
+    TreeNode *parent = NULL;
+    root = NULL;
+    while(!feof(f)){
+        int n;char tmp[20];
+        fscanf(f,"%d : ",&n);
+        fgets(tmp,sizeof(tmp),f);
+        tmp[strlen(tmp)-1]='\0';
+        if(i==0){
+            root = makeNode(n);
+        }else{
+            parent = find(root, n);
+        }
+        char*token=strtok(tmp," ");
+        while(token!=NULL){
+            if(i==0){
+                insert(root,atoi(token));
+            }else{
+                insert(parent,atoi(token));
+            }
+            token=strtok(NULL," ");
+        }
+        i++;
+    }
+    fclose(f);
+}
 bool check_la(TreeNode *r)
 {
     if (r->leftmostchild == NULL)
@@ -139,6 +167,10 @@ int main()
     char filename[100];
     printf("Nhap vao filename: ");
     scanf("%s", filename);
+    printf("Dung ham load1\n");
+    Load1(filename);
+    printTree(root);
+    printf("Dung ham load\n");
     Load(filename);
     printTree(root);
     freetree(root);
